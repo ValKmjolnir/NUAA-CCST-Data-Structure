@@ -135,7 +135,7 @@ class list
 			{
 				list_member* temp=head;
 				list_member* new_node=new list_member;
-				for(int j=0;j<i;++j)
+				for(int j=0;j<i-1;++j)
 					temp=temp->next;
 				new_node->last=temp;
 				new_node->next=temp->next;
@@ -191,9 +191,10 @@ int main()
 	m.ListTraverse(print);
 	m.ClearList();
 	m.ListTraverse(print);
+	m.ListInsert(1,0x7fffffff);
 	for(int i=0;i<16;++i)
 	{
-		m.ListInsert(1,i);
+		m.ListInsert(2,i);
 		cout<<endl;
 		m.ListTraverse(print);
 	}

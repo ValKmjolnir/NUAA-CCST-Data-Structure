@@ -131,9 +131,10 @@ int main()
 	m.ListTraverse(print);
 	m.ClearList();
 	m.ListTraverse(print);
+	m.ListInsert(1,0x7fffffff);
 	for(int i=0;i<16;++i)
 	{
-		m.ListInsert(1,i);
+		m.ListInsert(2,i);
 		cout<<endl;
 		m.ListTraverse(print);
 	}

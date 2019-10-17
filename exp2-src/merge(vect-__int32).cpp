@@ -112,16 +112,63 @@ class list
 			}
 			return;
 		}
+		void ListMerge(list& p)
+		{
+			int a=0,b=0;
+			if(!p.length)
+				return;
+			if(!length)
+			{
+				for(int i=0;i<p.length;++i)
+					this->ListInsert(i+1,p.elem[i]);
+				return;
+			}
+			while(1)
+			{
+				while(p.elem[b]>elem[a])
+				{
+					if(a<=length)
+						++a;
+					else
+						break;
+				}
+				if(p.elem[b]==elem[a])
+				{
+					++b;
+					if(b>p.length)
+						break;
+					if(a<=length)
+						++a;
+				}
+				else if(p.elem[b]>elem[a])
+				{
+					this->ListInsert(a,p.elem[b]);
+					++b;
+					if(b>p.length)
+						break;
+					if(a<=length)
+						++a;
+				}
+			}
+			return;
+		}
 };
 int main()
 {
 	srand(unsigned(time(NULL)));
-	list m;
-	for(int i=0;i<160;++i)
-		m.ListInsert(1,rand()%16);
-	m.ListTraverse(print);
+	list a,b;
+	for(int i=0;i<16;++i)
+	{
+		a.ListInsert(1,i-1);
+		b.ListInsert(1,i*2);
+	}
+	a.ListSort();
+	b.ListSort();
+	a.ListTraverse(print);
 	cout<<endl;
-	m.ListSort();
-	m.ListTraverse(print);
+	b.ListTraverse(print);
+	cout<<endl;
+	a.ListMerge(b);
+	a.ListTraverse(print);
 	return 0;
 }

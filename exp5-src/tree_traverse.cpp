@@ -86,16 +86,10 @@ class binary_tree
 						func(stk.top());
 						check.pop();check.push(1);check.push(0);
 					}
-					else if(stk.top()->right_child)
-					{
-						stk.push(stk.top()->right_child);
-						func(stk.top());
-						check.pop();check.push(2);check.push(0);
-					}
 					else
 					{
 						check.pop();
-						stk.pop();
+						check.push(1);
 					}
 				}
 				else if(check.top()==1)
@@ -109,7 +103,7 @@ class binary_tree
 					else
 					{
 						check.pop();
-						stk.pop();
+						check.push(2);
 					}
 				}
 				else if(check.top()==2)
@@ -143,16 +137,10 @@ class binary_tree
 						stk.push(stk.top()->left_child);
 						check.pop();check.push(1);check.push(0);
 					}
-					func(stk.top());
-					if(!(stk.top()->left_child) && stk.top()->right_child)
-					{
-						stk.push(stk.top()->right_child);
-						check.pop();check.push(2);check.push(0);
-					}
 					else
 					{
 						check.pop();
-						stk.pop();
+						check.push(1);
 					}
 				}
 				else if(check.top()==1)
@@ -166,7 +154,58 @@ class binary_tree
 					else
 					{
 						check.pop();
-						stk.pop();
+						check.push(2);
+					}
+				}
+				else if(check.top()==2)
+				{
+					check.pop();
+					stk.pop();
+				}
+			}
+			return;
+		}
+		void PostOrderTraverse(void (*func)(binary_tree*))
+		{
+			if(left_child)
+				left_child->PostOrderTraverse(func);
+			if(right_child)
+				right_child->PostOrderTraverse(func);
+			func(this);
+			return;
+		}
+		void PostOrderTraverse_stack(void (*func)(binary_tree*))
+		{
+			std::stack<binary_tree*> stk;
+			std::stack<int> check;
+			stk.push(this);
+			check.push(0);
+			while(!stk.empty())
+			{
+				if(check.top()==0)
+				{
+					if(stk.top()->left_child)
+					{
+						stk.push(stk.top()->left_child);
+						check.pop();check.push(1);check.push(0);
+					}
+					else
+					{
+						check.pop();
+						check.push(1);
+					}
+				}
+				else if(check.top()==1)
+				{
+					if(stk.top()->right_child)
+					{
+						stk.push(stk.top()->right_child);
+						check.pop();check.push(2);check.push(0);
+					}
+					else
+					{
+						check.pop();
+						check.push(2);
 					}
 				}
 				else if(check.top()==2)
@@ -176,14 +215,6 @@ class binary_tree
 					stk.pop();
 				}
 			}
-		}
-		void PostOrderTraverse(void (*func)(binary_tree*))
-		{
-			if(left_child)
-				left_child->PostOrderTraverse(func);
-			if(right_child)
-				right_child->PostOrderTraverse(func);
-			func(this);
 			return;
 		}
 		void LeverOrderTraverse(void (*func)(binary_tree*))
@@ -218,6 +249,8 @@ int main()
 	root.InOrderTraverse_stack(visit);
 	std::cout<<std::endl;
 	root.PostOrderTraverse(visit);
+	std::cout<<std::endl;
+	root.PostOrderTraverse_stack(visit);
 	std::cout<<std::endl;
 	root.LeverOrderTraverse(visit);
 	return 0;

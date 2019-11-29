@@ -60,26 +60,31 @@ class graph
 				d[i]=map[begin_node][i];
 				final[i]=false;
 			}
-			d[begin_node]=0;
-			final[begin_node]=true;
+			d[begin_node]=0; // shortest path to begin_node itself is 0
+			final[begin_node]=true;// begin_node has been visited
 			
 			for(int i=0;i<node_number;++i)
 			{
-				int v;
+				int v=begin_node;
 				int mmin=INF;
+				// get the shortest path between next nodes
 				for(int j=0;j<node_number;++j)
-					if(!final[j])
-						if(d[j]<mmin)
-						{
-							v=j;
-							mmin=d[j];
-						}
+					if(!final[j] && d[j]<mmin)// node j hasn't been visited and the length between begin_node and j shorter than mmin
+					{
+						v=j;
+						mmin=d[j];
+						// mmin means the shortest path from begin_node to node v
+					}
 				final[v]=true;
+				// update the shortest path
 				for(int j=0;j<node_number;++j)
 					if(!final[j] && (mmin+map[v][j]<d[j]))
 						d[j]=mmin+map[v][j];
 			}
 			std::cout<<begin_node<<" to "<<end_node<<"\'s shortest path length is "<<(d[end_node]==INF? -1:d[end_node])<<std::endl;
+			
+			delete []d;
+			delete []final;
 			return;
 		}
 		void floyd(int begin_node)

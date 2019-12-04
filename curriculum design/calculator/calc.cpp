@@ -162,7 +162,21 @@ void parser()
 					rpn.push_back(opt.top());
 					opt.pop();
 				}
-			if(i->oprt=='*' || i->oprt=='/' || i->oprt=='(')
+			if(i->oprt=='/' || i->oprt=='*')
+			{
+				while(!opt.empty())
+				{
+					if(opt.top().oprt=='/' || opt.top().oprt=='*')
+					{
+						rpn.push_back(opt.top());
+						opt.pop();
+					}
+					else
+						break;
+				}
+				opt.push(*i);
+			}
+			if(i->oprt=='(')
 				opt.push(*i);
 		}
 	}

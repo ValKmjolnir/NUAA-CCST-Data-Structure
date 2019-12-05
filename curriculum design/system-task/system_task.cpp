@@ -8,7 +8,7 @@ int main_process_begin_time;
 
 void print_time(int t)
 {
-	std::cout<<t/3600<<"h "<<(t/60)%3600<<"m "<<t%60<<"s";
+	std::cout<<t/3600<<"h "<<(t/60)%60<<"m "<<t%60<<"s";
 	return;
 } 
 

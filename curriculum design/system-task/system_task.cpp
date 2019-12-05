@@ -10,7 +10,7 @@ void print_time(int t)
 {
 	std::cout<<t/3600<<"h "<<(t/60)%3600<<"m "<<t%60<<"s";
 	return;
-}
+} 
 
 class task
 {
@@ -111,7 +111,7 @@ class task
 			memory=T.memory;
 			return *this;
 		}
-		void print()
+		void print(bool end)
 		{
 			bool short_style=false;
 			if(strlen(name)>20)
@@ -130,10 +130,23 @@ class task
 				for(;i<21;++i)
 					std::cout<<' ';
 			}
-			std::cout<<" | start ";
-			print_time(begin_time-main_process_begin_time);
-			std::cout<<" last ";
-			print_time(end_time-begin_time);
+			if(!end)
+			{
+				std::cout<<" | start ";
+				print_time(begin_time-main_process_begin_time);
+				std::cout<<" last ";
+				print_time(end_time-begin_time);
+			}
+			else
+			{
+				std::cout<<" | end time: ";
+				time_t t=end_time;
+				tm* trans=localtime(&t);
+				char end_t_str[64];
+				strcpy(end_t_str,asctime(trans));
+				end_t_str[strlen(end_t_str)-1]='\0';
+				std::cout<<end_t_str;
+			}
 			std::cout<<"\t| "<<memory<<"k"<<std::endl;
 			return;
 		}
@@ -281,7 +294,7 @@ class bi_list
 			while(temp->next)
 			{
 				temp=temp->next;
-				temp->elem.print();
+				temp->elem.print(false);
 			}
 			return;
 		}
@@ -390,7 +403,7 @@ class sg_list
 			while(temp->next)
 			{
 				temp=temp->next;
-				temp->elem.print();
+				temp->elem.print(true);
 			}
 			return;
 		}

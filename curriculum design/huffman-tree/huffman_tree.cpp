@@ -224,9 +224,7 @@ void decoder(const char* inputfilename,const char* outputfilename)
 	char_codes temp[128];
 	for(int i=0;i<128;++i)
 		temp[i]=code[i];
-	std::sort(temp,temp+128,length_cmp);
-	// must use sort first or some chars will be wrong
-	
+
 	std::list<bool> sequence;
 	std::ifstream fin(inputfilename,std::ios::binary);
 	std::ofstream fout(outputfilename,std::ios::binary);

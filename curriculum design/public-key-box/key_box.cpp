@@ -52,7 +52,14 @@ void ret_key(int k)
 int main()
 {
 	std::ifstream fin("data.txt");
+	if(fin.fail())
+	{
+		std::cout<<"error: cannot open file."<<std::endl;
+		fin.close();
+		return 0;
+	}
 	fin>>key_number>>n;
+	box=NULL;
 	box=new int[key_number];
 	for(int i=0;i<key_number;++i)
 		box[i]=i+1;

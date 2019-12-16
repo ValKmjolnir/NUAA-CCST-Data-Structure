@@ -16,10 +16,6 @@ struct char_codes
 	int length;
 	bool seq[40];
 }code[128];
-bool length_cmp(char_codes a,char_codes b)
-{
-	return a.length<b.length;
-}
 
 // huffman tree's node
 struct node
@@ -74,6 +70,7 @@ class huffman_tree
 		}
 		void input_file(const char* filename)
 		{
+			total_chars=0;
 			std::ifstream fin(filename,std::ios::binary);
 			if(fin.fail())
 			{
@@ -90,7 +87,7 @@ class huffman_tree
 				if(0<=c && c<128)
 				{
 					++cnt[c];
-					++total_chars;
+					++total_chars;// count chars in file
 				}
 			}
 			fin.close();
@@ -169,9 +166,9 @@ void information_output()
 	std::ofstream fout("Huffman.txt");
 	for(int i=0;i<128;++i)
 	{
-		fout<<code[i].cnt<<" ";
+		fout<<code[i].length<<" ";
 		for(int j=0;j<code[i].length;++j)
-			fout<<code[i].seq[j];
+			fout<<code[i].seq[j]<<" ";
 		fout<<std::endl;
 	}
 	fout.close();
@@ -202,6 +199,7 @@ void generate_file(const char* inputfilename,const char*outputfilename)
 	}
 	int cnt=7;
 	c=0;// must set to zero or the decoded file will be wrong
+	fout<<total_chars;// put the number of bytes as the head of file
 	for(std::list<bool>::iterator i=sequence.begin();i!=sequence.end();++i,--cnt)
 	{
 		if(cnt<0)
@@ -222,8 +220,15 @@ void generate_file(const char* inputfilename,const char*outputfilename)
 void decoder(const char* inputfilename,const char* outputfilename)
 {
 	char_codes temp[128];
+	std::ifstream codein("Huffman.txt");// get the huffman code of each char
 	for(int i=0;i<128;++i)
-		temp[i]=code[i];
+	{
+		codein>>temp[i].length;
+		temp[i].character=(char)i;
+		for(int j=0;j<temp[i].length;++j)
+			codein>>temp[i].seq[j];
+	}
+	codein.close();
 
 	std::list<bool> sequence;
 	std::ifstream fin(inputfilename,std::ios::binary);
@@ -236,13 +241,14 @@ void decoder(const char* inputfilename,const char* outputfilename)
 		return;
 	}
 	char c;
+	fin>>total_chars;// input number of bytes to make sure the decoder works well
 	while(!fin.eof())
 	{
 		c=fin.get();
 		if(fin.eof())
 			break;
 		for(int i=7;i>=0;--i)
-			sequence.push_back(c&(1<<i));
+			sequence.push_back(c&(1<<i));// get state from every bit
 	}
 	fin.close();
 	

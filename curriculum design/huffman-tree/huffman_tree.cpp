@@ -166,7 +166,7 @@ void information_output()
 	std::ofstream fout("Huffman.txt");
 	for(int i=0;i<128;++i)
 	{
-		fout<<code[i].length<<" ";
+		fout<<code[i].cnt<<" "<<code[i].length<<" ";
 		for(int j=0;j<code[i].length;++j)
 			fout<<code[i].seq[j]<<" ";
 		fout<<std::endl;
@@ -223,7 +223,7 @@ void decoder(const char* inputfilename,const char* outputfilename)
 	std::ifstream codein("Huffman.txt");// get the huffman code of each char
 	for(int i=0;i<128;++i)
 	{
-		codein>>temp[i].length;
+		codein>>temp[i].cnt>>temp[i].length;
 		temp[i].character=(char)i;
 		for(int j=0;j<temp[i].length;++j)
 			codein>>temp[i].seq[j];

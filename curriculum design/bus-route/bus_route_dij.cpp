@@ -366,13 +366,14 @@ class bus_route_map
 				route[*i]=-1;
 				
 				int found=-1;
-				int temp_cnt;
+				int temp_cnt;// store the number of route changes
 				while(!que.empty())
 				{
 					int tmp=que.front();
 					temp_cnt=cntque.front();
 					que.pop_front();
 					cntque.pop_front();
+					// check if tmp route includes the end station
 					for(std::list<int>::iterator j=end_station_routes.begin();j!=end_station_routes.end();++j)
 						if(tmp==*j)
 						{
@@ -381,6 +382,7 @@ class bus_route_map
 						}
 					if(found>=0)
 						break;
+					// add routes that have public station with tmp route to queue
 					for(int j=0;j<route_number;++j)
 						if(!route_used[j] && route_map[tmp][j])
 						{
@@ -390,6 +392,7 @@ class bus_route_map
 							cntque.push_back(temp_cnt+1);
 						}
 				}
+				// update new least route change path
 				int node=found;
 				if(temp_cnt<min_route_change && node>=0)
 				{

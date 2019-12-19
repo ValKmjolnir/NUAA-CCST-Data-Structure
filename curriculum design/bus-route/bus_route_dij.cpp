@@ -6,9 +6,9 @@
 class bus_station_lib
 {
 	private:
-		std::list<std::string> stations;
-		int station_number;
-		int route_number;
+		std::list<std::string> stations;// store all stations' name
+		int station_number;             // the number of stations
+		int route_number;               // the number of routes
 	public:
 		bus_station_lib()
 		{
@@ -46,6 +46,8 @@ class bus_station_lib
 			{
 				getline(fin,input_line);
 				input_line+=',';
+				// must add a ',' at the end of input_line
+				// if not, the last station name will not be pushed into stations list
 				if(fin.eof())
 					break; 
 				++route_number;
@@ -78,8 +80,8 @@ bus_station_lib lib;
 
 struct bus_route
 {
-	int station_identifier;
-	int bus_route_identifier;
+	int station_identifier;  // next station's id
+	int bus_route_identifier;// id of the route to the station
 };
 struct bus_station
 {
@@ -105,7 +107,6 @@ class bus_route_map
 		int route_number;
 		bool* route_used;
 		int* route;
-		int* route_identifier;
 		// for least route change path
 		
 	public:
@@ -119,7 +120,6 @@ class bus_route_map
 			route_map=NULL;
 			route_used=NULL;
 			route=NULL;
-			route_identifier=NULL;
 			return;
 		}
 		~bus_route_map()
@@ -142,12 +142,11 @@ class bus_route_map
 				delete []route_used;
 			if(route)
 				delete []route;
-			if(route_identifier)
-				delete []route_identifier;
 			return;
 		}
 		bool check_route_intersect(int route_id1,int route_id2)
 		{
+			// check if two routes have public stations
 			for(std::list<int>::iterator i=route_info[route_id1].station_id.begin();i!=route_info[route_id1].station_id.end();++i)
 				for(std::list<int>::iterator j=route_info[route_id2].station_id.begin();j!=route_info[route_id2].station_id.end();++j)
 					if(*j==*i)
@@ -156,6 +155,7 @@ class bus_route_map
 		}
 		void create_station_info_lib()
 		{
+			// initializing
 			station_number=lib.get_station_number();
 			route_number=lib.get_route_number();
 			station_info=new bus_station[station_number];
@@ -164,7 +164,6 @@ class bus_route_map
 			path=new int[station_number];
 			route_used=new bool[route_number];
 			route=new int[route_number];
-			route_identifier=new int[route_number];
 			int identifier=0;
 			for(std::list<std::string>::iterator i=lib.get_station_name_list().begin();i!=lib.get_station_name_list().end();++i,++identifier)
 				station_info[identifier].name=*i;
@@ -199,18 +198,21 @@ class bus_route_map
 			
 			while(!fin.eof())
 			{
+				// initializing
 				route_stations.clear();
 				getline(fin,input_line);
 				input_line+=',';
 				if(fin.eof())
 					break;
 				++route_count;
+				route_info[route_count].id=0;
 				int space_number=0;
 				tmp="";
+				// get id of each route
 				for(int i=0;i<input_line.length();++i)
 				{
 					if('0'<=input_line[i] && input_line[i]<='9')
-						route_identifier[route_count]=route_identifier[route_count]*10+(int)(input_line[i]-'0');
+						route_info[route_count].id=route_info[route_count].id*10+(int)(input_line[i]-'0');
 					else
 						break;
 				}
@@ -226,7 +228,7 @@ class bus_route_map
 						tmp="";
 					}
 				}
-				
+				// update station_info::next_stations
 				for(std::list<std::string>::iterator i=route_stations.begin();i!=route_stations.end();++i)
 				{
 					std::list<std::string>::iterator next_iter=i;
@@ -409,7 +411,7 @@ class bus_route_map
 			std::cout<<std::endl<<min_route_change<<" routes: ";
 			for(std::list<int>::iterator i=generated_route.begin();i!=generated_route.end();++i)
 			{
-				std::cout<<route_identifier[*i]<<" route";
+				std::cout<<route_info[*i].id<<" route";
 				++i;
 				if(i!=generated_route.end())
 					std::cout<<" -> ";

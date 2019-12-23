@@ -1,0 +1,136 @@
+1
+Richard-Jason
+1700 10 2
+1
+earth-sol-II
+0
+1750 1 19
+1
+Jepson-Jason
+1726 8 17
+1
+earth-sol-II
+0
+1786 7 7
+1
+Joseph-Jostar-Jason
+1751 10 4
+1
+earth-sol-II
+0
+1821 4 13
+1
+Black-Jason
+1780 5 10
+1
+earth-sol-II
+0
+1849 5 28
+1
+Black-Jason
+1805 10 1
+1
+earth-sol-II
+0
+1866 9 7
+1
+Black-Nonth-Jason
+1835 4 19
+1
+earth-sol-II
+0
+1900 10 28
+1
+Green-Jason
+1864 2 26
+1
+earth-sol-II
+0
+1950 11 23
+1
+Donald-Jason
+1885 3 18
+1
+earth-sol-III
+0
+1978 6 17
+1
+Richard-Godwin-Jason
+1915 10 12
+1
+earth-sol-II
+0
+1980 6 15
+1
+Odyssy-Jason
+1940 7 9
+1
+earth-sol-II
+1
+0
+0
+0
+0
+0
+0
+1
+Lily-Jason
+1809 12 25
+1
+earth-sol-II
+0
+1879 10 2
+0
+0
+0
+0
+1
+Hydrick-Deris-Jason
+1726 8 17
+1
+earth-sol-II
+0
+1770 6 18
+1
+Desly-Jason
+1750 10 4
+1
+earth-sol-III
+0
+1820 7 10
+0
+0
+1
+Geofry-Jason
+1730 9 1
+1
+earth-sol-III
+0
+1803 11 26
+0
+0
+1
+Schweid-Jason
+1700 10 2
+0
+earth-sol-II
+0
+1750 1 19
+1
+Schutingle-Albus-Jason
+1730 8 8
+1
+D.C
+0
+1788 9 10
+1
+Alfred-Jason
+1758 9 2
+1
+D.C
+0
+1825 10 2
+0
+0
+0
+0

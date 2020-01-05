@@ -39,6 +39,7 @@ void print_stack(std::stack<token> p)
 
 double str2num(std::string str)
 {
+	// transfer string to float number
 	double number;
 	int dot_place=-1;
 	for(int i=0;i<(int)str.length();++i)
@@ -78,6 +79,7 @@ double str2num(std::string str)
 
 bool lexer()
 {
+	// scan input sequence and split it into tokens
 	token_list.clear();
 	if((sequence.length()>1 && (sequence[0]!='#' || sequence[sequence.length()-1]!='#')) || sequence.length()<=1)
 	{
@@ -134,6 +136,8 @@ void parser()
 {
 	while(!opt.empty())opt.pop();
 	rpn.clear();
+	// rpn is used to store postfix expressions
+	// opt is used to store operators and pop operators
 	for(std::list<token>::iterator i=token_list.begin();i!=token_list.end();++i)
 	{
 		if(i->type==__number)
@@ -142,6 +146,10 @@ void parser()
 			opt.push(*i);
 		else if(i->type==__operator && !opt.empty())
 		{
+			// if this operator's priority is better than the one at the top of stack
+			// push this operator into rpn,
+			// if not push top of stack into rpn until the top's priority is better than
+			// this operator.
 			if((i->oprt=='+' || i->oprt=='-'))
 			{
 				while(!opt.empty() && opt.top().oprt!='(')
@@ -252,6 +260,7 @@ int main()
 		std::cin>>sequence;
 		if(sequence=="exit")
 			break;
+		// check if the input sequence begins and ends with '#'
 		if(sequence[0]!='#' && sequence[sequence.length()-1]!='#')
 		{
 			std::string filename=sequence;

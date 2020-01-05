@@ -1,0 +1,18 @@
+11 6
+{
+"firstName": "John",
+"lastName": "Smith",
+"address": {
+"streetAddress": "2ndStreet",
+"city": "NewYork",
+"state": "NY",
+"postal": {    "begin":"100","mid": "03", "end": "321"}
+},
+"esc\\aped":      "\"hello\""
+}
+firstName
+address
+address.city
+address.postal
+address.postal.mid
+esc\aped
